@@ -46,6 +46,7 @@ export type UserSettings = {
   firstMessage?: string; // <-- Added for first message
   sttApiKey?: string; // <-- Added for STT API key
   ttsApiKey?: string; // <-- Added for TTS API key
+  llmApiKey?: string; // <-- Added for LLM API key
 };
 
 // Fallback if NEXT_PUBLIC_APP_CONFIG is not set
@@ -73,6 +74,7 @@ const defaultConfig: AppConfig = {
     participant_name: "",
     metadata: "",
     attributes: [],
+    llmApiKey: "", // <-- Added for LLM API key
   },
   show_qr: false,
 };

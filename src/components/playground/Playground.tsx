@@ -273,6 +273,19 @@ export default function Playground({
           />
         </ConfigurationPanelItem>
 
+        <ConfigurationPanelItem title="LLM API Key">
+          <input
+            type="password"
+            className="w-full p-2 rounded border border-gray-700 bg-gray-900 text-gray-100 focus:outline-none focus:ring-2 focus:ring-cyan-500"
+            placeholder="Enter your LLM API key..."
+            value={config.settings.llmApiKey || ""}
+            onChange={e => {
+              const newSettings = { ...config.settings, llmApiKey: e.target.value };
+              setUserSettings(newSettings);
+            }}
+          />
+        </ConfigurationPanelItem>
+
         <ConfigurationPanelItem title="STT API Key">
           <input
             type="password"

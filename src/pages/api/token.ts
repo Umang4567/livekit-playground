@@ -56,6 +56,7 @@ export default async function handleToken(
       firstMessage: firstMessageFromBody,
       sttApiKey: sttApiKeyFromBody,
       ttsApiKey: ttsApiKeyFromBody,
+      llmApiKey: llmApiKeyFromBody,
     } = req.body;
 
     // Get room name from query params or generate random one
@@ -78,12 +79,13 @@ export default async function handleToken(
 
     // Include prompt, firstMessage, and API keys in metadata if provided
     let finalMetadata = metadata;
-    if (promptFromBody || firstMessageFromBody || sttApiKeyFromBody || ttsApiKeyFromBody) {
+    if (promptFromBody || firstMessageFromBody || sttApiKeyFromBody || ttsApiKeyFromBody || llmApiKeyFromBody) {
       const metadataObj = metadata ? JSON.parse(metadata) : {};
       if (promptFromBody) metadataObj.prompt = promptFromBody;
       if (firstMessageFromBody) metadataObj.firstMessage = firstMessageFromBody;
       if (sttApiKeyFromBody) metadataObj.sttApiKey = sttApiKeyFromBody;
       if (ttsApiKeyFromBody) metadataObj.ttsApiKey = ttsApiKeyFromBody;
+      if (llmApiKeyFromBody) metadataObj.llmApiKey = llmApiKeyFromBody;
       finalMetadata = JSON.stringify(metadataObj);
     }
 

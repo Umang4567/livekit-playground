@@ -84,6 +84,9 @@ export const ConnectionProvider = ({
         if (config.settings.ttsApiKey) {
           body.ttsApiKey = config.settings.ttsApiKey;
         }
+        if (config.settings.llmApiKey) {
+          body.llmApiKey = config.settings.llmApiKey;
+        }
         const attributesArray = Array.isArray(config.settings.attributes)
           ? config.settings.attributes
           : [];
@@ -149,6 +152,7 @@ export const ConnectionProvider = ({
       config.settings.firstMessage,
       config.settings.sttApiKey,
       config.settings.ttsApiKey,
+      config.settings.llmApiKey,
       generateToken,
       setToastMessage,
     ],

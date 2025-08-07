@@ -208,7 +208,6 @@ export default function Playground({
     return visualizerContent;
   }, [
     voiceAssistant.audioTrack,
-    config.settings.theme_color,
     roomState,
     voiceAssistant.state,
   ]);
@@ -246,6 +245,21 @@ export default function Playground({
     participant: voiceAssistant.agent,
   });
 
+  const handleApiKeysSave = useCallback((keys: {
+    llmApiKey?: string;
+    sttApiKey?: string;
+    ttsApiKey?: string;
+  }) => {
+    const newSettings = {
+      ...config.settings,
+      llmApiKey: keys.llmApiKey,
+      sttApiKey: keys.sttApiKey,
+      ttsApiKey: keys.ttsApiKey,
+    };
+    setUserSettings(newSettings);
+  }, [config.settings, setUserSettings]);
+
+
   const settingsTileContent = useMemo(() => {
     return (
       <div className="flex flex-col h-full w-full items-start overflow-y-auto">
@@ -273,44 +287,6 @@ export default function Playground({
           />
         </ConfigurationPanelItem>
 
-        <ConfigurationPanelItem title="LLM API Key">
-          <input
-            type="password"
-            className="w-full p-2 rounded border border-gray-700 bg-gray-900 text-gray-100 focus:outline-none focus:ring-2 focus:ring-cyan-500"
-            placeholder="Enter your LLM API key..."
-            value={config.settings.llmApiKey || ""}
-            onChange={e => {
-              const newSettings = { ...config.settings, llmApiKey: e.target.value };
-              setUserSettings(newSettings);
-            }}
-          />
-        </ConfigurationPanelItem>
-
-        <ConfigurationPanelItem title="STT API Key">
-          <input
-            type="password"
-            className="w-full p-2 rounded border border-gray-700 bg-gray-900 text-gray-100 focus:outline-none focus:ring-2 focus:ring-cyan-500"
-            placeholder="Enter your STT API key..."
-            value={config.settings.sttApiKey || ""}
-            onChange={e => {
-              const newSettings = { ...config.settings, sttApiKey: e.target.value };
-              setUserSettings(newSettings);
-            }}
-          />
-        </ConfigurationPanelItem>
-
-        <ConfigurationPanelItem title="TTS API Key">
-          <input
-            type="password"
-            className="w-full p-2 rounded border border-gray-700 bg-gray-900 text-gray-100 focus:outline-none focus:ring-2 focus:ring-cyan-500"
-            placeholder="Enter your TTS API key..."
-            value={config.settings.ttsApiKey || ""}
-            onChange={e => {
-              const newSettings = { ...config.settings, ttsApiKey: e.target.value };
-              setUserSettings(newSettings);
-            }}
-          />
-        </ConfigurationPanelItem>
 
         <ConfigurationPanelItem title="User">
           <div className="flex flex-col gap-2">
@@ -362,6 +338,12 @@ export default function Playground({
               themeColor={config.settings.theme_color}
               disabled={false}
               connectionState={roomState}
+              apiKeys={{
+                llmApiKey: config.settings.llmApiKey,
+                sttApiKey: config.settings.sttApiKey,
+                ttsApiKey: config.settings.ttsApiKey,
+              }}
+              onApiKeysSave={handleApiKeysSave}
             />
           </div>
         </ConfigurationPanelItem>
@@ -437,11 +419,8 @@ export default function Playground({
       </div>
     );
   }, [
-    config.description,
-    config.settings,
-    config.show_qr,
+    config,
     localParticipant,
-    name,
     roomState,
     localCameraTrack,
     localScreenTrack,
@@ -452,8 +431,7 @@ export default function Playground({
     rpcMethod,
     rpcPayload,
     handleRpcCall,
-    showRpc,
-    setShowRpc,
+    handleApiKeysSave,
   ]);
 
   let mobileTabs: PlaygroundTab[] = [];

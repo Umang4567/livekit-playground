@@ -17,7 +17,7 @@ const createToken = (
   const at = new AccessToken(apiKey, apiSecret, userInfo);
   at.addGrant(grant);
   if (agentName) {
-    at.roomConfig = new RoomConfiguration({
+    (at as any).roomConfig = new RoomConfiguration({
       agents: [
         new RoomAgentDispatch({
           agentName: agentName,

@@ -90,9 +90,7 @@ export const ConnectionProvider = ({
         const attributesArray = Array.isArray(config.settings.attributes)
           ? config.settings.attributes
           : [];
-        // Ensure tts_model and stt_model are included if set
-        const ttsAttr = attributesArray.find(a => a.key === "tts_model");
-        const sttAttr = attributesArray.find(a => a.key === "stt_model");
+        // Convert all attributes to key-value pairs for the backend
         const attributes = attributesArray.reduce(
           (acc, attr) => {
             if (attr.key) {
@@ -102,8 +100,6 @@ export const ConnectionProvider = ({
           },
           {} as Record<string, string>,
         );
-        if (ttsAttr && ttsAttr.value) attributes["tts_model"] = ttsAttr.value;
-        if (sttAttr && sttAttr.value) attributes["stt_model"] = sttAttr.value;
         if (Object.keys(attributes).length) {
           body.attributes = attributes;
         }

@@ -47,6 +47,10 @@ export type UserSettings = {
   sttApiKey?: string; // <-- Added for STT API key
   ttsApiKey?: string; // <-- Added for TTS API key
   llmApiKey?: string; // <-- Added for LLM API key
+  // Model-specific API keys
+  llmKeys?: { [key: string]: string };
+  sttKeys?: { [key: string]: string };
+  ttsKeys?: { [key: string]: string };
 };
 
 // Fallback if NEXT_PUBLIC_APP_CONFIG is not set

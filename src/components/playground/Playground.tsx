@@ -249,12 +249,18 @@ export default function Playground({
     llmApiKey?: string;
     sttApiKey?: string;
     ttsApiKey?: string;
+    llmKeys?: { [key: string]: string };
+    sttKeys?: { [key: string]: string };
+    ttsKeys?: { [key: string]: string };
   }) => {
     const newSettings = {
       ...config.settings,
       llmApiKey: keys.llmApiKey,
       sttApiKey: keys.sttApiKey,
       ttsApiKey: keys.ttsApiKey,
+      llmKeys: keys.llmKeys,
+      sttKeys: keys.sttKeys,
+      ttsKeys: keys.ttsKeys,
     };
     setUserSettings(newSettings);
   }, [config.settings, setUserSettings]);
@@ -290,38 +296,6 @@ export default function Playground({
 
         <ConfigurationPanelItem title="User">
           <div className="flex flex-col gap-2">
-            <EditableNameValueRow
-              name="Name"
-              value={
-                roomState === ConnectionState.Connected
-                  ? localParticipant?.name || ""
-                  : config.settings.participant_name || ""
-              }
-              valueColor={`${config.settings.theme_color}-500`}
-              onValueChange={(value) => {
-                const newSettings = { ...config.settings };
-                newSettings.participant_name = value;
-                setUserSettings(newSettings);
-              }}
-              placeholder="Auto"
-              editable={roomState !== ConnectionState.Connected}
-            />
-            <EditableNameValueRow
-              name="Identity"
-              value={
-                roomState === ConnectionState.Connected
-                  ? localParticipant?.identity || ""
-                  : config.settings.participant_id || ""
-              }
-              valueColor={`${config.settings.theme_color}-500`}
-              onValueChange={(value) => {
-                const newSettings = { ...config.settings };
-                newSettings.participant_id = value;
-                setUserSettings(newSettings);
-              }}
-              placeholder="Auto"
-              editable={roomState !== ConnectionState.Connected}
-            />
             <AttributesInspector
               attributes={config.settings.attributes || []}
               onAttributesChange={(newAttributes) => {
@@ -342,6 +316,9 @@ export default function Playground({
                 llmApiKey: config.settings.llmApiKey,
                 sttApiKey: config.settings.sttApiKey,
                 ttsApiKey: config.settings.ttsApiKey,
+                llmKeys: config.settings.llmKeys,
+                sttKeys: config.settings.sttKeys,
+                ttsKeys: config.settings.ttsKeys,
               }}
               onApiKeysSave={handleApiKeysSave}
             />

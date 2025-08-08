@@ -79,6 +79,12 @@ const defaultConfig: AppConfig = {
     metadata: "",
     attributes: [],
     llmApiKey: "", // <-- Added for LLM API key
+    sttApiKey: "", // <-- Added for STT API key
+    ttsApiKey: "", // <-- Added for TTS API key
+    // Model-specific API keys
+    llmKeys: {},
+    sttKeys: {},
+    ttsKeys: {},
   },
   show_qr: false,
 };

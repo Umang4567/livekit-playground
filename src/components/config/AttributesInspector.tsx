@@ -18,11 +18,17 @@ interface AttributesInspectorProps {
     llmApiKey?: string;
     sttApiKey?: string;
     ttsApiKey?: string;
+    llmKeys?: { [key: string]: string };
+    sttKeys?: { [key: string]: string };
+    ttsKeys?: { [key: string]: string };
   };
   onApiKeysSave?: (keys: {
     llmApiKey?: string;
     sttApiKey?: string;
     ttsApiKey?: string;
+    llmKeys?: { [key: string]: string };
+    sttKeys?: { [key: string]: string };
+    ttsKeys?: { [key: string]: string };
   }) => void;
 }
 
@@ -370,7 +376,7 @@ export const AttributesInspector: React.FC<AttributesInspectorProps> = ({
               <input
                 type="text"
                 className="w-full text-gray-400 text-sm bg-transparent border border-gray-800 rounded-sm px-3 py-1"
-                placeholder={`Enter ${llmProvider} model name (e.g., ${llmProvider === 'openai' ? 'gpt-4o, gpt-4-turbo' : llmProvider === 'groq' ? 'llama-3.1-70b-versatile, mixtral-8x7b' : 'model-name'})`}
+                placeholder={`Enter ${llmProvider} model name (e.g., ${llmProvider === "openai" ? "gpt-4o, gpt-4-turbo" : llmProvider === "groq" ? "llama-3.1-70b-versatile, mixtral-8x7b" : "model-name"})`}
                 value={llmModelId}
                 onChange={(e) => handleLLMModelIdChange(e.target.value)}
                 disabled={disabled}
@@ -423,7 +429,7 @@ export const AttributesInspector: React.FC<AttributesInspectorProps> = ({
               <input
                 type="text"
                 className="w-full text-gray-400 text-sm bg-transparent border border-gray-800 rounded-sm px-3 py-1"
-                placeholder={`Enter ${ttsProvider} model name (e.g., ${ttsProvider === 'openai' ? 'tts-1, tts-1-hd' : ttsProvider === 'elevenlabs' ? 'eleven_multilingual_v2' : ttsProvider === 'cartesia' ? 'sonic-english' : ttsProvider === 'deepgram' ? 'aura-asteria-en' : ttsProvider === 'playht' ? 'PlayHT2.0-turbo' : ttsProvider === 'sarvam' ? 'bulbul' : 'model-name'})`}
+                placeholder={`Enter ${ttsProvider} model name (e.g., ${ttsProvider === "openai" ? "tts-1, tts-1-hd" : ttsProvider === "elevenlabs" ? "eleven_multilingual_v2" : ttsProvider === "cartesia" ? "sonic-english" : ttsProvider === "deepgram" ? "aura-asteria-en" : ttsProvider === "playht" ? "PlayHT2.0-turbo" : ttsProvider === "sarvam" ? "bulbul" : "model-name"})`}
                 value={ttsModelId}
                 onChange={(e) => handleTTSModelIdChange(e.target.value)}
                 disabled={disabled}
@@ -476,15 +482,15 @@ export const AttributesInspector: React.FC<AttributesInspectorProps> = ({
               <input
                 type="text"
                 className="w-full text-gray-400 text-sm bg-transparent border border-gray-800 rounded-sm px-3 py-1"
-                placeholder={`Enter ${sttProvider} model name (e.g., ${sttProvider === 'openai' ? 'whisper-1' : sttProvider === 'deepgram' ? 'nova-2' : sttProvider === 'assemblyai' ? 'best' : sttProvider === 'groq' ? 'whisper-large-v3' : sttProvider === 'fal' ? 'whisper' : sttProvider === 'cartesia' ? 'raman' : sttProvider === 'sarvam' ? 'saarika:v1' : 'model-name'})`}
+                placeholder={`Enter ${sttProvider} model name (e.g., ${sttProvider === "openai" ? "whisper-1" : sttProvider === "deepgram" ? "nova-2" : sttProvider === "assemblyai" ? "best" : sttProvider === "groq" ? "whisper-large-v3" : sttProvider === "fal" ? "whisper" : sttProvider === "cartesia" ? "raman" : sttProvider === "sarvam" ? "saarika:v1" : "model-name"})`}
                 value={sttModelId}
                 onChange={(e) => handleSTTModelIdChange(e.target.value)}
                 disabled={disabled}
               />
             )}
           </div>
-          {disabled ? (
-            localAttributes.filter(
+          {disabled &&
+            (localAttributes.filter(
               (attr) =>
                 ![
                   "tts_provider",
@@ -520,39 +526,7 @@ export const AttributesInspector: React.FC<AttributesInspectorProps> = ({
                     disabled={true}
                   />
                 ))
-            )
-          ) : (
-            <>
-              <div className="flex justify-between items-center">
-                <Button
-                  accentColor={themeColor}
-                  onClick={handleAddAttribute}
-                  className="text-xs flex items-center gap-1"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-3 w-3"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M12 4v16m8-8H4"
-                    />
-                  </svg>
-                  Attribute
-                </Button>
-                {showSyncFlash && (
-                  <div className="text-xs text-gray-400 animate-fade-in-out">
-                    Changes saved
-                  </div>
-                )}
-              </div>
-            </>
-          )}
+            ))}
         </div>
       )}
       <>
